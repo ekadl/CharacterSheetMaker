@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Profile - Geon gu seul</title>
+    <style>
+        :root {
+            --bg-color: #f0f0f0;
+            --card-bg: #ffffff;
+            --accent-blue: #b9cce4;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 1000px;
+            display: flex;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            gap: 40px;
+        }
+
+        /* 왼쪽 전신 섹션 */
+        .left-section {
+            flex: 1;
+            text-align: left;
+        }
+
+        .name-title h1 {
+            font-size: 3rem;
+            margin: 0;
+            font-weight: 800;
+        }
+
+        .name-title p {
+            font-size: 1.5rem;
+            color: #888;
+            margin: 0 0 20px 0;
+        }
+
+        .full-body-img {
+            width: 100%;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        /* 오른쪽 상세 섹션 */
+        .right-section {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .top-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .img-card {
+            flex: 1;
+            position: relative;
+        }
+
+        .img-card span {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: black;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .img-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 컬러칩 섹션 */
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-chip {
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .box { width: 20px; height: 20px; border-radius: 3px; }
+
+        /* 상세 텍스트 섹션 */
+        .details-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .info-box {
+            flex: 1;
+            background: #e9e9e9;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        .info-box h3 { margin-top: 0; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
+        .info-box ul { list-style: none; padding: 0; }
+        .info-box li { margin-bottom: 8px; font-size: 0.95rem; }
+        .info-box li::before { content: "• "; color: #555; }
+
+        .chibi-section {
+            flex: 0.8;
+            text-align: center;
+            border-left: 2px dashed #ccc;
+            padding-left: 20px;
+        }
+
+        .chibi-img {
+            width: 100%;
+            border-radius: 15px;
+            background: linear-gradient(to bottom, #333, #666);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="left-section">
+        <div class="name-title">
+            <h1>권구슬</h1>
+            <p>Geon gu seul</p>
+        </div>
+        <img src="https://via.placeholder.com/400x600" alt="Full Body" class="full-body-img">
+    </div>
+
+    <div class="right-section">
+        <div class="top-row">
+            <div class="img-card">
+                <span>두상</span>
+                <img src="https://via.placeholder.com/300" alt="Headshot">
+            </div>
+            <div class="img-card">
+                <span>강아지</span>
+                <img src="https://via.placeholder.com/300" alt="Mascot">
+            </div>
+        </div>
+
+        <div class="color-palette">
+            <div class="color-chip"><div class="box" style="background: #222;"></div> L eyes</div>
+            <div class="color-chip"><div class="box" style="background: #222;"></div> R eyes</div>
+            <div class="color-chip"><div class="box" style="background: #333;"></div> Hair</div>
+            <div class="color-chip"><div class="box" style="background: #b9cce4;"></div> Etc</div>
+            <div class="color-chip"><div class="box" style="background: #b9cce4;"></div> Etc</div>
+        </div>
+
+        <div class="details-container">
+            <div class="info-box">
+                <h3>Hair</h3>
+                <ul>
+                    <li>눈까지 내려오는 앞머리</li>
+                    <li>귀를 가리는 옆머리</li>
+                    <li>시크릿투톤(검정, 하양)</li>
+                </ul>
+
+                <h3>Eyes</h3>
+                <ul>
+                    <li>작은 하이라이트</li>
+                    <li>동공 없음</li>
+                </ul>
+
+                <h3>Clothes</h3>
+                <ul>
+                    <li>검은색 네일</li>
+                    <li>하늘색 망토</li>
+                </ul>
+            </div>
+
+            <div class="chibi-section">
+                <p style="font-size: 0.8rem; color: #666;">Credit: 아씨끄러님 / 앤님 / 후은님</p>
+                <img src="https://via.placeholder.com/200x300" alt="Chibi" class="chibi-img">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
