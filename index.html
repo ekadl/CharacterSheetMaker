@@ -3,208 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Profile - Geon gu seul</title>
+    <title>Editable Character Sheet</title>
     <style>
         :root {
-            --bg-color: #f0f0f0;
-            --card-bg: #ffffff;
-            --accent-blue: #b9cce4;
-            --text-dark: #333;
+            --bg-grad-1: #eef2f3;
+            --bg-grad-2: #8e9eab;
         }
 
         body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-grad-1), var(--bg-grad-2));
             margin: 0;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 안내 문구 */
+        .admin-note {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         .container {
-            background-color: var(--card-bg);
-            width: 1000px;
-            display: flex;
+            background: white;
+            width: 950px;
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            display: flex;
             gap: 40px;
-        }
-
-        /* 왼쪽 전신 섹션 */
-        .left-section {
-            flex: 1;
-            text-align: left;
-        }
-
-        .name-title h1 {
-            font-size: 3rem;
-            margin: 0;
-            font-weight: 800;
-        }
-
-        .name-title p {
-            font-size: 1.5rem;
-            color: #888;
-            margin: 0 0 20px 0;
-        }
-
-        .full-body-img {
-            width: 100%;
-            border-radius: 15px;
-            object-fit: cover;
-        }
-
-        /* 오른쪽 상세 섹션 */
-        .right-section {
-            flex: 1.5;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .top-row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .img-card {
-            flex: 1;
             position: relative;
+            overflow: hidden;
         }
 
-        .img-card span {
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            background: black;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            z-index: 1;
-        }
-
-        .img-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* 컬러칩 섹션 */
-        .color-palette {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .color-chip {
-            border: 1px solid #ddd;
-            padding: 5px 10px;
-            border-radius: 5px;
+        /* 이미지 업로드 공통 스타일 */
+        .img-upload-container {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background: #f5f5f5;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            min-width: 80px;
+            justify-content: center;
+            border: 2px dashed #ccc;
         }
 
-        .box { width: 20px; height: 20px; border-radius: 3px; }
+        .img-upload-container:hover { border-color: #666; }
+        .img-upload-container input[type="file"] { display: none; }
+        .img-upload-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 상세 텍스트 섹션 */
-        .details-container {
-            display: flex;
-            gap: 20px;
+        /* 왼쪽 섹션 */
+        .left-section { flex: 1; }
+        .name-area { margin-bottom: 30px; }
+        .editable-text { outline: none; transition: 0.2s; border-radius: 4px; }
+        .editable-text:hover { background: rgba(0,0,0,0.05); }
+        .editable-text:focus { background: rgba(0,0,0,0.1); border-bottom: 2px solid #333; }
+
+        .full-body { width: 100%; height: 600px; border-radius: 15px; }
+
+        /* 오른쪽 섹션 */
+        .right-section { flex: 1.5; display: flex; flex-direction: column; gap: 25px; }
+        
+        .top-row { display: flex; gap: 20px; }
+        .sub-img { flex: 1; height: 220px; border-radius: 20px; }
+        .label { 
+            position: absolute; top: 10px; left: 10px; background: black; color: white;
+            padding: 4px 15px; border-radius: 15px; font-size: 0.8rem; z-index: 2;
         }
 
-        .info-box {
-            flex: 1;
-            background: #e9e9e9;
-            padding: 30px;
-            border-radius: 20px;
-        }
+        .color-palette { display: flex; gap: 10px; }
+        .chip { border: 1px solid #ddd; padding: 5px 10px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
+        .chip input[type="color"] { border: none; width: 20px; height: 20px; cursor: pointer; }
 
-        .info-box h3 { margin-top: 0; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
-        .info-box ul { list-style: none; padding: 0; }
-        .info-box li { margin-bottom: 8px; font-size: 0.95rem; }
-        .info-box li::before { content: "• "; color: #555; }
+        .details { display: flex; gap: 20px; background: #f9f9f9; padding: 25px; border-radius: 20px; }
+        .info-text { flex: 1; }
+        .chibi-area { flex: 0.7; border-left: 1px dashed #ddd; padding-left: 20px; text-align: center; }
+        .chibi-img { width: 100%; height: 250px; border-radius: 15px; }
 
-        .chibi-section {
-            flex: 0.8;
-            text-align: center;
-            border-left: 2px dashed #ccc;
-            padding-left: 20px;
-        }
-
-        .chibi-img {
-            width: 100%;
-            border-radius: 15px;
-            background: linear-gradient(to bottom, #333, #666);
+        @media print {
+            .admin-note { display: none; }
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; border: none; }
         }
     </style>
 </head>
 <body>
 
+<div class="admin-note">💡 텍스트를 클릭해 수정하고, 이미지를 클릭해 사진을 변경하세요. 완료 후 Ctrl+P로 저장하세요.</div>
+
 <div class="container">
     <div class="left-section">
-        <div class="name-title">
-            <h1>권구슬</h1>
-            <p>Geon gu seul</p>
+        <div class="name-area">
+            <h1 class="editable-text" contenteditable="true">캐릭터 이름</h1>
+            <p class="editable-text" contenteditable="true" style="color: #888; font-size: 1.2rem;">English Name</p>
         </div>
-        <img src="https://via.placeholder.com/400x600" alt="Full Body" class="full-body-img">
+        <label class="img-upload-container full-body">
+            <input type="file" accept="image/*" onchange="previewImage(this)">
+            <img src="https://via.placeholder.com/400x600?text=Full+Body" alt="전신">
+        </label>
     </div>
 
     <div class="right-section">
         <div class="top-row">
-            <div class="img-card">
-                <span>두상</span>
-                <img src="https://via.placeholder.com/300" alt="Headshot">
-            </div>
-            <div class="img-card">
-                <span>강아지</span>
-                <img src="https://via.placeholder.com/300" alt="Mascot">
-            </div>
+            <label class="img-upload-container sub-img">
+                <span class="label editable-text" contenteditable="true">두상</span>
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img src="https://via.placeholder.com/300?text=Head" alt="두상">
+            </label>
+            <label class="img-upload-container sub-img">
+                <span class="label editable-text" contenteditable="true">소지품/동물</span>
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img src="https://via.placeholder.com/300?text=Sub" alt="서브">
+            </label>
         </div>
 
         <div class="color-palette">
-            <div class="color-chip"><div class="box" style="background: #222;"></div> L eyes</div>
-            <div class="color-chip"><div class="box" style="background: #222;"></div> R eyes</div>
-            <div class="color-chip"><div class="box" style="background: #333;"></div> Hair</div>
-            <div class="color-chip"><div class="box" style="background: #b9cce4;"></div> Etc</div>
-            <div class="color-chip"><div class="box" style="background: #b9cce4;"></div> Etc</div>
+            <div class="chip"><input type="color" value="#333333"> <span contenteditable="true">Hair</span></div>
+            <div class="chip"><input type="color" value="#555555"> <span contenteditable="true">Eyes</span></div>
+            <div class="chip"><input type="color" value="#b9cce4"> <span contenteditable="true">Etc</span></div>
         </div>
 
-        <div class="details-container">
-            <div class="info-box">
-                <h3>Hair</h3>
-                <ul>
-                    <li>눈까지 내려오는 앞머리</li>
-                    <li>귀를 가리는 옆머리</li>
-                    <li>시크릿투톤(검정, 하양)</li>
-                </ul>
-
-                <h3>Eyes</h3>
-                <ul>
-                    <li>작은 하이라이트</li>
-                    <li>동공 없음</li>
-                </ul>
-
-                <h3>Clothes</h3>
-                <ul>
-                    <li>검은색 네일</li>
-                    <li>하늘색 망토</li>
-                </ul>
+        <div class="details">
+            <div class="info-text">
+                <div contenteditable="true" style="margin-bottom: 15px;">
+                    <strong>[Hair]</strong>
+                    <ul style="margin: 5px 0;"><li>내용을 입력하세요.</li></ul>
+                </div>
+                <div contenteditable="true">
+                    <strong>[Clothes]</strong>
+                    <ul style="margin: 5px 0;"><li>상세 설정을 입력하세요.</li></ul>
+                </div>
             </div>
-
-            <div class="chibi-section">
-                <p style="font-size: 0.8rem; color: #666;">Credit: 아씨끄러님 / 앤님 / 후은님</p>
-                <img src="https://via.placeholder.com/200x300" alt="Chibi" class="chibi-img">
+            
+            <div class="chibi-area">
+                <p class="editable-text" contenteditable="true" style="font-size: 0.7rem; color: #999; margin-bottom: 10px;">Credit: 작가명</p>
+                <label class="img-upload-container chibi-img">
+                    <input type="file" accept="image/*" onchange="previewImage(this)">
+                    <img src="https://via.placeholder.com/200x300?text=SD" alt="미니">
+                </label>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // 이미지 미리보기 함수
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                input.parentElement.querySelector('img').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 
 </body>
 </html>
